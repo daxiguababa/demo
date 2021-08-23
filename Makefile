@@ -7,7 +7,7 @@
 # 	docker build --build-arg TOKEN=${TOKEN} --build-arg VERSION=${GITTAG} --build-arg COMMIT=${COMMIT} --build-arg BUILDTIME=${BUILD_TIME} -t ${DOCKER_USER}/${PROJECT}:latest .
 .PHONY: all-in-one
 all-in-one:
-	docker build -f ./main . -t demo
+	docker build -f ./Dockerfile . -t demo
 
 # .PHONY: admin-api
 # admin-api:
