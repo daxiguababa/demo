@@ -1,12 +1,12 @@
-FROM builder
-# 按需安装依赖包
+FROM golang:1.13-alpine as builder
+WORKDIR /root
+COPY ./  ./
+RUN export GO111MODULE=on && CGO_ENABLED=0 GOOS=linux go build -o ./main ./main.go
 
-# 设置Go编译参数
-COPY . /app
-RUN cd /app;\
-    go env -w GOPROXY=https://goproxy.cn,direct; \
 
-RUN GOOS=linux go build -o ./main ./main.go; \
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root
+COPY --from=builder /root/main ./
 
-COPY --from=builder /app/main /usr/local/bin
-ENTRYPOINT [ "main" ]
+ENTRYPOINT ["/root/main"]

@@ -1,0 +1,107 @@
+name: Release
+on:
+  release:
+    types: [published]
+    branches:
+      - main
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+      - name: Code
+        uses: actions/checkout@v1
+      - name: Intsall Golangci-lint
+        run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b . latest
+      - name: Lint
+        run: ./golangci-lint run --skip-dirs=".git|.github|dashboard|doc" --timeout=5m
+
+  test:
+    name: Unit Testing
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+      - name: Code
+        uses: actions/checkout@v1
+      - name: Go Get dependencies
+        run: go get -v -t -d ./...
+      - name: Go Test
+        run: go test -v ./...
+
+  docker:
+    needs: [lint, test]
+    name: docker build and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code
+        uses: actions/checkout@v1
+      - name: Set env
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      - name: tag
+        run: echo ${{ env.RELEASE_VERSION }}
+      - name: all in one
+        run: |
+          make all-in-one
+          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag xconf-all:latest ${{ secrets.DOCKER_USERNAME }}/xconf-all:latest
+          docker tag xconf-all:latest ${{ secrets.DOCKER_USERNAME }}/xconf-all:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/xconf-all:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/xconf-all:${{ env.RELEASE_VERSION }}
+      - name: admin-api
+        run: |
+          make admin-api
+          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
+          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
+      - name: agent-api
+        run: |
+          make agent-api
+          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
+          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
+      - name: config-srv
+        run: |
+          make config-srv
+          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
+          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
+      - name: micro
+        run: |
+          make micro
+          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:latest
+          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:latest
+          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
+      - name: agent
+        run: |
+          make agent
+          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:latest
+          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
+
+          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:latest
+          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
