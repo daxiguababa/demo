@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 )
+
 //
 ///* 有关Task任务相关定义及操作 */
 ////定义任务Task类型,每一个任务Task都可以抽象成一个函数
@@ -86,7 +87,7 @@ func main() {
 	for i := 0; i < 100; i++ {
 
 		time.Sleep(time.Second * 1)
-		fmt.Println(fmt.Sprintf("当前运行的位置是:%d", i))
+		fmt.Printf("当前运行的位置是:%d \r\n", i)
 	}
 	////创建一个Task
 	//t := NewTask(func() error {
