@@ -55,53 +55,53 @@ jobs:
         run: |
           make all-in-one
           docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag xconf-all:latest ${{ secrets.DOCKER_USERNAME }}/xconf-all:latest
-          docker tag xconf-all:latest ${{ secrets.DOCKER_USERNAME }}/xconf-all:${{ env.RELEASE_VERSION }}
+          docker tag demo:latest ${{ secrets.DOCKER_USERNAME }}/demo:latest
+          docker tag demo:latest ${{ secrets.DOCKER_USERNAME }}/demo:${{ env.RELEASE_VERSION }}
 
-          docker push ${{ secrets.DOCKER_USERNAME }}/xconf-all:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/xconf-all:${{ env.RELEASE_VERSION }}
-      - name: admin-api
-        run: |
-          make admin-api
-          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
-          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
-
-          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
-      - name: agent-api
-        run: |
-          make agent-api
-          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
-          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
-
-          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
-      - name: config-srv
-        run: |
-          make config-srv
-          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
-          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
-
-          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
-      - name: micro
-        run: |
-          make micro
-          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:latest
-          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
-
-          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:latest
-          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
-      - name: agent
-        run: |
-          make agent
-          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:latest
-          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
-
-          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:latest
-          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/demo:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/demo:${{ env.RELEASE_VERSION }}
+#      - name: admin-api
+#        run: |
+#          make admin-api
+#          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
+#          docker tag admin-api:latest ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
+#
+#          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:latest
+#          docker push ${{ secrets.DOCKER_USERNAME }}/admin-api:${{ env.RELEASE_VERSION }}
+#      - name: agent-api
+#        run: |
+#          make agent-api
+#          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
+#          docker tag agent-api:latest ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
+#
+#          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:latest
+#          docker push ${{ secrets.DOCKER_USERNAME }}/agent-api:${{ env.RELEASE_VERSION }}
+#      - name: config-srv
+#        run: |
+#          make config-srv
+#          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
+#          docker tag config-srv:latest ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
+#
+#          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:latest
+#          docker push ${{ secrets.DOCKER_USERNAME }}/config-srv:${{ env.RELEASE_VERSION }}
+#      - name: micro
+#        run: |
+#          make micro
+#          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:latest
+#          docker tag micro:latest ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
+#
+#          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:latest
+#          docker push ${{ secrets.REGISTRY_USERNAME }}/micro:${{ env.RELEASE_VERSION }}
+#      - name: agent
+#        run: |
+#          make agent
+#          docker login docker.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:latest
+#          docker tag agent:latest ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
+#
+#          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:latest
+#          docker push ${{ secrets.REGISTRY_USERNAME }}/agent:${{ env.RELEASE_VERSION }}
