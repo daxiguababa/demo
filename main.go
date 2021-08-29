@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"github.com/gin-gonic/gin"
+	"github/demo/routers"
+	"log"
 )
 
 //
@@ -81,31 +83,18 @@ import (
 //	close(p.EntryChannel)
 //}
 
-//主函数
 func main() {
-	fmt.Println("欢迎进入")
-	for i := 0; i < 100; i++ {
 
-		time.Sleep(time.Second * 1)
-		fmt.Printf("当前运行的位置是:%d \r\n", i)
+	//gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
+	//	log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
+	//	fmt.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
+	//}
+	r := gin.Default()
+	routers.SetupRouter(r)
+	// Listen and Server in http://0.0.0.0:8080
+
+	if err := r.Run(":8088"); err != nil {
+		log.Fatalln("启动服务失败：", err.Error())
+		fmt.Printf("启动服务失败：%s\n", err.Error())
 	}
-	////创建一个Task
-	//t := NewTask(func() error {
-	//	fmt.Println(time.Now().UnixNano())
-	//	return nil
-	//})
-	//
-	////创建一个协程池,最大开启3个协程worker
-	//p := NewPool(3)
-	//
-	////开一个协程 不断的向 Pool 输送打印一条时间的task任务
-	//go func() {
-	//	for {
-	//		p.EntryChannel <- t
-	//	}
-	//}()
-	//
-	////启动协程池p
-	//p.Run()
-
 }
