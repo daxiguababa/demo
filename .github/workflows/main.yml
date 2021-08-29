@@ -51,7 +51,8 @@ jobs:
 #      run: go test -v ./...
 
   docker:
-    needs: [lint, test]
+#    needs: [lint, test]
+    needs: [lint]
     name: docker build and push
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
