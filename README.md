@@ -16,6 +16,6 @@ go get -u github.com/spf13/viper
 5.mongo
 go get go.mongodb.org/mongo-driver/mongo
 
-6.mysql grom
+6.mysql
 go get -u gorm.io/gorm
 go get -u gorm.io/driver/mysql
