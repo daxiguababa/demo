@@ -15,15 +15,15 @@ func (m SendMQ) Send() (error, string) {
 	// 连接RabbitMQ服务器
 	conn, err := amqp.Dial("amqp://admin:admin@192.168.27.128:5672/admin")
 	if err != nil {
-		err = errors.New("未找到rabbitmq")
-		failOnError(err, "未找到rabbitmq")
+		err = errors.New("生产者：未找到rabbitmq")
+		failOnError(err, "生产者：未找到rabbitmq")
 	}
 	defer conn.Close()
 	// 创建一个channel
 	ch, err := conn.Channel()
 	if err != nil {
-		err = errors.New("未找到频道")
-		failOnError(err, "未找到频道")
+		err = errors.New("生产者：未找到频道")
+		failOnError(err, "生产者：未找到频道")
 	}
 	defer ch.Close()
 
@@ -36,8 +36,8 @@ func (m SendMQ) Send() (error, string) {
 		false, nil,
 	)
 	if err != nil {
-		err = errors.New("发布消息失败")
-		failOnError(err, "打开队列失败")
+		err = errors.New("生产者：打开队列失败")
+		failOnError(err, "生产者：打开队列失败")
 	}
 	// 发送消息到队列中
 	msg := fmt.Sprintf("当前时间：%d", time.Now().UnixNano())
@@ -51,8 +51,8 @@ func (m SendMQ) Send() (error, string) {
 			Body:        []byte(msg),
 		})
 	if err != nil {
-		err = errors.New("发布消息失败")
-		failOnError(err, "发布消息失败")
+		err = errors.New("生产者：发布消息失败")
+		failOnError(err, "生产者：发布消息失败")
 	}
 	return err, msg
 }

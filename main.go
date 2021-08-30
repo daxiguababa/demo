@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github/demo/dao"
+	"github/demo/mq"
 	"github/demo/routers"
+	"github/demo/utils"
 	"log"
 )
 
@@ -82,19 +85,32 @@ import (
 //	//4, 执行完毕需要关闭EntryChannel
 //	close(p.EntryChannel)
 //}
-
+func init() {
+	//初始化配置
+	if err := utils.InitConfig(""); err != nil {
+		//初始化错误了直接退出程序
+		log.Fatalln("初始化配置文件出错", err.Error())
+	}
+	//启动redis配置
+	dao.InitRedis()
+	//启动mongo
+	dao.InitMongo()
+	//mysql
+	dao.InitDB()
+}
 func main() {
-
 	//gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 	//	log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
 	//	fmt.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
 	//}
 	r := gin.Default()
 	routers.SetupRouter(r)
+	go mq.ReceiveMQ{}.Receive()
 	// Listen and Server in http://0.0.0.0:8080
-
+	//
 	if err := r.Run(":8088"); err != nil {
 		log.Fatalln("启动服务失败：", err.Error())
 		fmt.Printf("启动服务失败：%s\n", err.Error())
 	}
+
 }

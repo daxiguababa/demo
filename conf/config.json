@@ -1,0 +1,32 @@
+{
+  "app": {
+    "app_name": "demo"
+  },
+  "mysql": {
+    "host": "192.168.27.128",
+    "port": 33060,
+    "user": "root",
+    "password": "123456",
+    "database": "demo",
+    "prefix": "",
+    "charset": "utf8mb4",
+    "MaxIdleConns": 300,
+    "MaxOpenConns": 300,
+    "sql_log": true
+  },
+  "redis": {
+    "host": "192.168.27.128",
+    "port": 6380,
+    "password": "Aa123456",
+    "db": 5,
+    "pool_size": 1024
+  },
+  "mongodb": {
+    "host": "192.168.27.128",
+    "port": 27017,
+    "user": "admin",
+    "password": "Aa123456",
+    "database": "admin",
+    "db": "demo"
+  }
+}
