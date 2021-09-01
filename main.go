@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"github/demo/dao"
 	"github/demo/mq"
 	"github/demo/routers"
@@ -110,7 +111,7 @@ func main() {
 	go mq.ReceiveMQ{}.Receive()
 	// Listen and Server in http://0.0.0.0:8080
 	//
-	if err := r.Run(":8088"); err != nil {
+	if err := r.Run(":" + viper.GetString("app.port")); err != nil {
 		log.Fatalln("启动服务失败：", err.Error())
 		fmt.Printf("启动服务失败：%s\n", err.Error())
 	}
