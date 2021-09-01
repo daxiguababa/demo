@@ -98,12 +98,14 @@ func init() {
 	//mysql
 	dao.InitDB()
 }
+
 func main() {
 	//gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 	//	log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
 	//	fmt.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
 	//}
 	r := gin.Default()
+
 	routers.SetupRouter(r)
 	go mq.ReceiveMQ{}.Receive()
 	// Listen and Server in http://0.0.0.0:8080

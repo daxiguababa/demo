@@ -29,7 +29,7 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 	})
 
 	r.GET("/redis", func(c *gin.Context) {
-		err := dao.Redis.Set("demo", time.Now().UnixNano(), time.Second*10).Err()
+		err := dao.Redis.Set("demo", time.Now().UnixNano(), -1).Err()
 		if err != nil {
 			c.JSON(http.StatusOK, err.Error())
 			return
