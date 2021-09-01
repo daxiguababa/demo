@@ -51,20 +51,20 @@ jobs:
   #      run: go test -v ./...
 
   docker:
-    needs: [ lint, test ]
-      #    needs: [lint]
-      name: docker build and push
-      runs-on: ubuntu-latest
-      if: github.event_name == 'push'
-      steps:
-        - name: Code
-          uses: actions/checkout@v1
-        - name: all in one
-          run: |
-            make all-in-one
-            docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker tag demo:latest ${{ secrets.DOCKER_USERNAME }}/demo:latest
-            docker push ${{ secrets.DOCKER_USERNAME }}/demo:latest
+    #    needs: [ lint, test ]
+    needs: [ lint ]
+    name: docker build and push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Code
+        uses: actions/checkout@v1
+      - name: all in one
+        run: |
+          make all-in-one
+          docker login docker.io -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag demo:latest ${{ secrets.DOCKER_USERNAME }}/demo:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/demo:latest
 
 #  deploy:
 #    needs: docker
