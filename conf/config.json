@@ -4,11 +4,11 @@
     "port": 8080
   },
   "mysql": {
-    "host": "139.155.19.220",
-    "port": 33060,
+    "host": "",
+    "port": 0,
     "user": "root",
-    "password": "E8D488A7-19FC-4239-97A2-F94E7F8E52C7",
-    "database": "demo",
+    "password": "",
+    "database": "0",
     "prefix": "",
     "charset": "utf8mb4",
     "MaxIdleConns": 300,
@@ -16,27 +16,27 @@
     "sql_log": true
   },
   "redis": {
-    "host": "139.155.19.220",
-    "port": 36379,
-    "password": "E8D488A7-19FC-4239-97A2-F94E7F8E52C7",
+    "host": "",
+    "port": 0,
+    "password": "",
     "db": 5,
     "pool_size": 1024
   },
   "mongodb": {
-    "host": "139.155.19.220",
-    "port": 27017,
-    "user": "admin",
-    "password": "E8D488A7-19FC-4239-97A2-F94E7F8E52C7",
-    "database": "admin",
-    "db": "demo"
+    "host": "",
+    "port": "",
+    "user": "",
+    "password": "",
+    "database": "",
+    "db": ""
   },
   "rabbitmq": {
-    "host": "139.155.19.220",
-    "port": 5672,
-    "user": "admin",
-    "password": "E8D488A7-19FC-4239-97A2-F94E7F8E52C7",
-    "vhost": "admin",
-    "db": "demo"
+    "host": "",
+    "port": 0,
+    "user": "",
+    "password": "",
+    "vhost": "",
+    "db": ""
 
   }
 }
