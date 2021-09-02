@@ -8,5 +8,5 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root
 COPY --from=builder /root/main ./
-COPY --from=builder /root/conf conf/
+#COPY --from=builder /root/conf conf/
 ENTRYPOINT ["/root/main"]
