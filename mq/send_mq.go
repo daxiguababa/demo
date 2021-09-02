@@ -13,7 +13,7 @@ type SendMQ struct {
 
 func (m SendMQ) Send() (error, string) {
 	// 连接RabbitMQ服务器
-	conn, err := amqp.Dial("amqp://admin:admin@192.168.27.128:5672/admin")
+	conn, err := amqp.Dial(RabbitConfig{}.GetConn())
 	if err != nil {
 		err = errors.New("生产者：未找到rabbitmq")
 		failOnError(err, "生产者：未找到rabbitmq")

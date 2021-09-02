@@ -3,7 +3,6 @@ package mq
 import (
 	"errors"
 	"fmt"
-	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
 )
@@ -13,12 +12,7 @@ type ReceiveMQ struct {
 
 func (m ReceiveMQ) Receive() {
 
-	host := viper.GetString("rabbitmq.host")
-	port := viper.GetString("rabbitmq.port")
-	user := viper.GetString("rabbitmq.user")
-	password := viper.GetString("rabbitmq.password")
-	vhost := viper.GetString("rabbitmq.vhost")
-	conStr := fmt.Sprintf("amqp://%s:%s@%s:%s/%s", user, password, host, port, vhost)
+	conStr := fmt.Sprintf(RabbitConfig{}.GetConn())
 
 	// 连接RabbitMQ服务器
 	conn, err := amqp.Dial(conStr)
