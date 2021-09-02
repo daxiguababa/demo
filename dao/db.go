@@ -12,7 +12,6 @@ import (
 	"io"
 	"log"
 	"math"
-	"net/url"
 	"os"
 	"time"
 )
@@ -63,7 +62,7 @@ func (c *dbConfig) init() *gorm.DB {
 			Colorful:      false,       // 禁用彩色打印
 		},
 	)
-	connString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=%s", c.User, c.Password, c.Host, c.Port, c.Database, c.Charset, url.QueryEscape("Asia/Shanghai"))
+	connString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=%s", c.User, c.Password, c.Host, c.Port, c.Database, c.Charset, "Local")
 	db, err := gorm.Open(mysql.Open(connString), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   c.TablePrefix,
