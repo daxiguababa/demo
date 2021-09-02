@@ -93,11 +93,18 @@ func init() {
 		log.Fatalln("初始化配置文件出错", err.Error())
 	}
 	//启动redis配置
-	dao.InitRedis()
+	if viper.GetBool("app.use_redis") {
+		dao.InitRedis()
+	}
 	//启动mongo
-	dao.InitMongo()
+	if viper.GetBool("app.use_mongo") {
+		dao.InitMongo()
+	}
 	//mysql
-	dao.InitDB()
+	if viper.GetBool("app.use_mysql") {
+		dao.InitDB()
+	}
+
 }
 
 func main() {
@@ -108,9 +115,11 @@ func main() {
 	r := gin.Default()
 
 	routers.SetupRouter(r)
-	go mq.ReceiveMQ{}.Receive()
-	// Listen and Server in http://0.0.0.0:8080
-	//
+
+	if viper.GetBool("app.use_rabbitmq") {
+		go mq.ReceiveMQ{}.Receive()
+	}
+
 	if err := r.Run(":" + viper.GetString("app.port")); err != nil {
 		log.Fatalln("启动服务失败：", err.Error())
 		fmt.Printf("启动服务失败：%s\n", err.Error())

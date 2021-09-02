@@ -85,6 +85,7 @@ func (c *dbConfig) init() *gorm.DB {
 
 	//最大的连接数
 	sqlDB.SetMaxOpenConns(c.MaxOpenConn)
+	logrus.Fatalln("连接数据库成功")
 	return db
 }
 

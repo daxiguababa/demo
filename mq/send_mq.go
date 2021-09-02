@@ -3,6 +3,7 @@ package mq
 import (
 	"errors"
 	"fmt"
+	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
 	"time"
@@ -29,10 +30,10 @@ func (m SendMQ) Send() (error, string) {
 
 	// 声明一个队列
 	q, err := ch.QueueDeclare(
-		"hello", // 队列名称
-		false,   // 是否持久化
-		false,   // 是否自动删除
-		false,   // 是否独立
+		viper.GetString("rabbitmq.queen"), // 队列名称
+		false,                             // 是否持久化
+		false,                             // 是否自动删除
+		false,                             // 是否独立
 		false, nil,
 	)
 	if err != nil {

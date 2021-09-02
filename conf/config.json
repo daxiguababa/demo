@@ -1,7 +1,11 @@
 {
   "app": {
     "app_name": "demo",
-    "port": 8080
+    "port": 8080,
+    "use_redis": false,
+    "use_mongo": false,
+    "use_mysql": false,
+    "use_rabbitmq": false
   },
   "mysql": {
     "host": "",
@@ -36,7 +40,7 @@
     "user": "",
     "password": "",
     "vhost": "",
-    "db": ""
-
+    "db": "",
+    "queen":"hello"
   }
 }

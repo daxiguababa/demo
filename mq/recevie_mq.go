@@ -2,7 +2,7 @@ package mq
 
 import (
 	"errors"
-	"fmt"
+	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 	"log"
 )
@@ -27,10 +27,10 @@ func (m ReceiveMQ) Receive() {
 	defer ch.Close()
 	// 监听队列
 	q, err := ch.QueueDeclare(
-		"hello", // 队列名称
-		false,   // 是否持久化
-		false,   // 是否自动删除
-		false,   // 是否独立
+		viper.GetString("rabbitmq.queen"), // 队列名称
+		false,                             // 是否持久化
+		false,                             // 是否自动删除
+		false,                             // 是否独立
 		false, nil,
 	)
 	if err != nil {
@@ -57,11 +57,9 @@ func (m ReceiveMQ) Receive() {
 	go func() {
 		for d := range msg {
 			log.Printf("处理消息: %s\n", d.Body)
-			fmt.Printf("处理消息: %s\n", d.Body)
 		}
 	}()
 	//log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	log.Println("等待接受新消息......")
-	fmt.Println("等待接受新消息......")
 	<-forever
 }

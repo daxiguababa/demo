@@ -1,5 +1,7 @@
-#  demo #
-# 测试项目 #
+#  go-demo #
+# 本项目使用gin框架集成rabbitmq、gorm、redis、mongo、viper配置读取等，后续将加入微信开发应用 #
+
+## 注意：使用之前请先配置好conf/config.json文件 ##
 
 ## 1.框架 ##
 go get -u github.com/gin-gonic/gin

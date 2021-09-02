@@ -21,7 +21,9 @@ func InitRedis() {
 	Redis = redisConfig.init()
 	if _, err := Redis.Ping().Result(); err != nil {
 		logrus.Fatalln("redis连接出错:", err)
+		return
 	}
+	logrus.Fatalln("redis连接成功")
 }
 
 type redisConfig struct {
