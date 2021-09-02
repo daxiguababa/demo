@@ -64,7 +64,7 @@ func (c *MongoConfig) init() *mongo.Database {
 		logrus.Fatalln("MongoDb连接失败", err.Error())
 		return nil
 	}
-	logrus.Fatalln("MongoDb连接成功")
+	logrus.Println("MongoDb连接成功")
 	return client.Database(c.DB)
 	//return client
 }
