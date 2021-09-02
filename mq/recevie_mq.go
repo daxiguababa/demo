@@ -11,11 +11,8 @@ type ReceiveMQ struct {
 }
 
 func (m ReceiveMQ) Receive() {
-
-	conStr := fmt.Sprintf(RabbitConfig{}.GetConn())
-
 	// 连接RabbitMQ服务器
-	conn, err := amqp.Dial(conStr)
+	conn, err := amqp.Dial(RabbitConfig{}.GetConn())
 	if err != nil {
 		err = errors.New("消费者：未找到rabbitmq")
 		failOnError(err, "消费者：未找到rabbitmq")
